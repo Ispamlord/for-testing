@@ -43,13 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="for comment.cs" />
+    <Compile Include="Parse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scan.cs" />
-    <Compile Include="ScanLexic.cs" />
-    <Compile Include="ScanWithoutRegex.cs" />
     <Compile Include="struct.cs" />
+    <Compile Include="TokenReturn.cs" />
+    <Compile Include="MyToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

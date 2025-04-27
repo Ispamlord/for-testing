@@ -9,14 +9,5 @@ using System.Threading.Tasks;
 
 namespace for_testing
 {
-    struct ffff 
-    {
-        
-    }
-    //    public struct test1 { {{{{private int fac1; }
-
-    //public strct test2 { private int fac2; }
-    //    private test
-    //{ { } }
-    //    testc struct { {};
+    struct iaf { int aga; int name; };
 }
