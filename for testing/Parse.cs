@@ -108,28 +108,29 @@ namespace for_testing
         {
             if (myTokens.Count != 0)
             {
+                Token how = GetNeedToken(token.tokens);
                 if (error == ERRORTYPE.DELETE)
                 {
-                    token.error.Add(new MyToken($"Ожидается   \"{(GetNeedToken(token.tokens))}\"", myTokens[current_token].Position, myTokens[current_token].Line));
+                    token.error.Add(new MyToken($"Ожидается   \"{how}\"", myTokens[current_token].Position, myTokens[current_token].Line));
                     current_token++;
                     errorCount++;
                 }
                 else if (error == ERRORTYPE.CHANGE)
                 {
-                    token.error.Add(new MyToken($"Ожидается \"{(GetNeedToken(token.tokens))}\",было  получено \"{myTokens[current_token].Value}\"", myTokens[current_token].Position, myTokens[current_token].Line));
+                    token.error.Add(new MyToken($"Ожидается \"{how}\",было  получено \"{myTokens[current_token].Value}\"", myTokens[current_token].Position, myTokens[current_token].Line));
                     token.tokens.Add(GetNeedToken(token.tokens));
                     current_token++;
                     errorCount++;
                 }
                 else if (error == ERRORTYPE.ADD)
                 {
-                    token.error.Add(new MyToken($"Ожидается \"{(GetNeedToken(token.tokens))}\"", myTokens[current_token].Position, myTokens[current_token].Line));
+                    token.error.Add(new MyToken($"Ожидается \"{how}\"", myTokens[current_token].Position, myTokens[current_token].Line));
                     token.tokens.Add(GetNeedToken(token.tokens));
                     errorCount++;
                 }
                 else if (error == ERRORTYPE.ADDEND)
                 {
-                    token.error.Add(new MyToken($"Ожидается \"{(GetNeedToken(token.tokens))}\"", myTokens[myTokens.Count - 1].Position + 3, myTokens[myTokens.Count - 1].Line));
+                    token.error.Add(new MyToken($"Ожидается \"{how}\"", myTokens[myTokens.Count - 1].Position + 3, myTokens[myTokens.Count - 1].Line));
                     token.tokens.Add(GetNeedToken(token.tokens));
                     errorCount++;
                 }
@@ -138,16 +139,17 @@ namespace for_testing
                     token.tokens.Add(tokens[current_token]);
                     current_token++;
                 }
+                Token what = GetNeedToken(token.tokens);
                 if (tokens.Count > current_token)
                 {
-                    if (GetNeedToken(token.tokens) != tokens[current_token])
+                    if (what != tokens[current_token])
                     {
-                        if ((GetNeedToken(token.tokens) == Token.ID && tokens[current_token] == Token.NUMBER) ||
-                            (GetNeedToken(token.tokens) == Token.ID && tokens[current_token] == Token.EQUELS &&
-                            ((token.tokens[token.tokens.Count - 2] == Token.ID || token.tokens[token.tokens.Count - 2] == Token.NUMBER)  && 
-                            (token.tokens[token.tokens.Count - 1] == Token.OPERATOR || token.tokens[token.tokens.Count- 1] == Token.EQUELS))) ||
-                            (GetNeedToken(token.tokens) == Token.ELSE && tokens[current_token] == Token.SEMICOLON) ||
-                            (GetNeedToken(token.tokens) == Token.OPERATOR && tokens[current_token] == Token.EQUELS))
+                        if ((what == Token.ID && tokens[current_token] == Token.NUMBER) ||
+                            (what == Token.ID && tokens[current_token] == Token.EQUELS &&
+                            ((token.tokens[token.tokens.Count - 1] == Token.OPERATOR || token.tokens[token.tokens.Count- 1] == Token.EQUELS) &&
+                            (token.tokens[token.tokens.Count - 2] == Token.ID || token.tokens[token.tokens.Count - 2] == Token.NUMBER))) ||
+                            (what == Token.ELSE && tokens[current_token] == Token.SEMICOLON) ||
+                            (what == Token.OPERATOR && tokens[current_token] == Token.EQUELS))
 
                         {
                             return Parser(ERRORTYPE.NONE, current_token, ref token, errorCount);
@@ -187,10 +189,12 @@ namespace for_testing
                 else
                 {
                     int if1=0;
+                    int b = 0;
                     for (int i = 0; i < token.tokens.Count; i++) {
-                        if (token.tokens[i] == Token.IF)
+                        if (token.tokens[i] == Token.IF )
                         {
                             if1++;
+                            b = 1;
                         }
                         if(token.tokens[i] == Token.SEMICOLON && if1 != 0)
                         {
@@ -198,7 +202,7 @@ namespace for_testing
                         }
                     }
                     
-                    if (token.tokens[token.tokens.Count - 1] != Token.SEMICOLON && if1 != 0 )
+                    if (if1 != 0 && token.tokens[token.tokens.Count - 1] != Token.SEMICOLON)
                     {
                         
                         var token3 = new TokenReturn(token.tokens, token.error);

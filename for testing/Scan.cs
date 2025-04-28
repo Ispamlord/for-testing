@@ -171,17 +171,14 @@ namespace for_testing
                             {
                                 word += ch;
                             }
+                            i++;
                         }
                         else
                         {
-                            // мусорный символ — игнорируем
-                            errors.Add(text[i].ToString());
-                            this.line.Add(line);
-                            this.position.Add(i);
+                            break; 
                         }
-
-                        i++;
                     }
+
 
                     if (word.Length > 0)
                     {
