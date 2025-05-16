@@ -220,37 +220,64 @@ namespace for_testing
                 }
 
                 // Числа
+                // Числа
                 if (char.IsDigit(c))
                 {
                     int start = i;
-                    string number = "";
 
-                    while (i < text.Length && !char.IsWhiteSpace(text[i]) && !IsDelimiter(text[i].ToString()))
+                    if (c == '0')
                     {
-                        if (char.IsDigit(text[i]))
+                        // Добавить 0 как отдельный токен
+                        codes.Add(14);
+                        keywords.Add("number");
+                        keyword.Add("0");
+                        myTokens.Add(new MyToken(i, line, "0"));
+                        prevcode = 14;
+                        i++;
+
+                        // Проверить, есть ли ещё цифры после 0
+                        if (i < text.Length && char.IsDigit(text[i]))
+                        {
+                            int secondStart = i;
+                            string number = "";
+                            while (i < text.Length && !char.IsWhiteSpace(text[i]) && !IsDelimiter(text[i].ToString()) && char.IsDigit(text[i]))
+                            {
+                                number += text[i];
+                                i++;
+                            }
+
+                            if (number.Length > 0)
+                            {
+                                codes.Add(14);
+                                keywords.Add("number");
+                                keyword.Add(number);
+                                myTokens.Add(new MyToken(secondStart, line, number));
+                                prevcode = 14;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        string number = "";
+                        while (i < text.Length && !char.IsWhiteSpace(text[i]) && !IsDelimiter(text[i].ToString()) && char.IsDigit(text[i]))
                         {
                             number += text[i];
+                            i++;
                         }
-                        else
+
+                        if (number.Length > 0)
                         {
-                            // мусорный символ — игнорируем
-                            errors.Add(text[i].ToString());
-                            this.line.Add(line);
-                            this.position.Add(i);
+                            codes.Add(14);
+                            keywords.Add("number");
+                            keyword.Add(number);
+                            myTokens.Add(new MyToken(start, line, number));
+                            prevcode = 14;
                         }
-                        i++;
                     }
 
-                    if (number.Length > 0)
-                    {
-                        codes.Add(14); // код для числа
-                        keywords.Add("number");
-                        keyword.Add(number);
-                        myTokens.Add(new MyToken(start, line, number));
-                        prevcode = 14;
-                    }
                     continue;
                 }
+
 
                 // Все остальные символы — ошибка
                 errors.Add(c.ToString());

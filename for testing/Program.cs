@@ -12,7 +12,7 @@ namespace for_testing
         {
             
             Console.OutputEncoding = Encoding.UTF8;
-            string text = "IF X== 0 THEN GOTO 100 ELSe GOTO id;";
+            string text = "IF X== 01 THEN GOTO 100 ELSe GOTO id;";
             Scan lexic = new Scan(text);
 
             lexic.Lexic();
