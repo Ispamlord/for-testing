@@ -20,6 +20,7 @@ namespace for_testing
         ID,         
         NUMBER,
         EQUELS,
+        VOSKL,
         UNKNOWN
     }
     public class Scan
@@ -80,7 +81,6 @@ namespace for_testing
                         fortoken.Add(keyword[i]);
                         break;
                     case 5:
-                    case 9:
                         tokens.Add(Token.EQUELS);
                         fortoken.Add(keyword[i]);
                         break;
@@ -99,6 +99,10 @@ namespace for_testing
                         break;
                     case 14:
                         tokens.Add(Token.NUMBER);
+                        fortoken.Add(keyword[i]);
+                        break;
+                    case 9:
+                        tokens.Add(Token.VOSKL);
                         fortoken.Add(keyword[i]);
                         break;
                     default:

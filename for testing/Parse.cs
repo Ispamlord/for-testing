@@ -85,6 +85,10 @@ namespace for_testing
                 {
                     return Token.IF;
                 }
+                else if (tokencurrent[tokencurrent.Count - 1] == Token.VOSKL)
+                {
+                    return Token.EQUELS;
+                }
                 
             }
             else
@@ -149,8 +153,8 @@ namespace for_testing
                             ((token.tokens[token.tokens.Count - 1] == Token.OPERATOR || token.tokens[token.tokens.Count- 1] == Token.EQUELS) &&
                             (token.tokens[token.tokens.Count - 2] == Token.ID || token.tokens[token.tokens.Count - 2] == Token.NUMBER))) ||
                             (what == Token.ELSE && tokens[current_token] == Token.SEMICOLON) ||
-                            (what == Token.OPERATOR && tokens[current_token] == Token.EQUELS))
-
+                            (what == Token.OPERATOR && tokens[current_token] == Token.EQUELS) ||
+                            (what == Token.OPERATOR && tokens[current_token] == Token.VOSKL))
                         {
                             return Parser(ERRORTYPE.NONE, current_token, ref token, errorCount);
                         }
