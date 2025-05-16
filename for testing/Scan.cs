@@ -53,7 +53,8 @@ namespace for_testing
             { "=", 5 },
             { ">", 6 },
             { "<", 7 },
-            { ";", 8 }
+            { ";", 8 },
+            { "!", 9 }
 
         };
         public void Tokenize()
@@ -79,6 +80,7 @@ namespace for_testing
                         fortoken.Add(keyword[i]);
                         break;
                     case 5:
+                    case 9:
                         tokens.Add(Token.EQUELS);
                         fortoken.Add(keyword[i]);
                         break;
@@ -129,7 +131,7 @@ namespace for_testing
                 }
 
                 // Разрешенные одиночные символы
-                if (c == '=' || c == '>' || c == '<' || c == ';')
+                if (c == '=' || c == '>' || c == '<' || c == ';' || c == '!')
                 {
                     int code = keyValuePairs.ContainsKey(c.ToString()) ? keyValuePairs[c.ToString()] : 0;
                     if (code != 0)
